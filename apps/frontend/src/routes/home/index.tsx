@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+
 import LoadingPage from "@/components/pages/loading";
 import { useAuthStore } from "@/store/useAuthStore";
+
 import LoginForm from "./components/login-form";
 
 export default function Home() {
@@ -23,7 +25,7 @@ export default function Home() {
   }
 
   return (
-    <section className="grid min-h-svh w-full place-items-center">
+    <section className="grid min-h-svh w-full place-items-center px-6">
       <LoginForm />
     </section>
   );
