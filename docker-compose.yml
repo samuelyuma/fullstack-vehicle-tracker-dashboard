@@ -1,0 +1,57 @@
+services:
+  database:
+    container_name: postgres
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    expose:
+      - ${POSTGRES_PORT}
+    volumes:
+      - ./docker/volumes/:/var/lib/postgresql/data
+    networks:
+      - yumx-vehicle-tracker-network
+
+  backend:
+    container_name: yumx-vehicle-tracker-backend
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - ${PORT}:${PORT}
+    expose:
+      - ${PORT}
+    depends_on:
+      - database
+    networks:
+      - yumx-vehicle-tracker-network
+
+  frontend:
+    container_name: yumx-vehicle-tracker-frontend
+    build:
+      context: ./apps/frontend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    expose:
+      - '3000'
+    depends_on:
+      - backend
+    networks:
+      - yumx-vehicle-tracker-network
+
+networks:
+  yumx-vehicle-tracker-network:
+    driver: bridge
+
+volumes:
+  data:
+    name: yumx-vehicle-tracker-data
