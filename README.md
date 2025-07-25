@@ -75,6 +75,8 @@ Make sure [Docker](https://docs.docker.com/engine/install/) installed on your 
 ## 👷🏻 Run the Application
 
 - Make sure `Docker` is running, then run this command: `docker compose up -d --build`
+- Once sucessfully build, enter into `backend` container: `docker exec -it yumx-vehicle-tracker-backend sh`
+- Run database migration and seeding: `bun prisma:deploy && bun prisma:seed` then `exit` from the container
 
 Open [http://localhost:3000/](http://localhost:3000/) to access the `frontend`, and [http://localhost:8080/docs](http://localhost:8080/docs) to access the API documentation.
 
